@@ -49,9 +49,13 @@ def cadastrar():
 @app.route("/buscar", methods=["POST"])
 def buscaritens():
     item = request.form["buscar-item"]
-    if item != "":
+    search_option = request.form["search-option"]
+
+    if item:
         regex_pattern = re.compile(re.escape(item), re.IGNORECASE)
-        myquery = {"item": {"$regex": regex_pattern}}
+        myquery = {
+            search_option: {"$regex": regex_pattern}
+        }
         mydoc = mycol.find(myquery)
 
         results = []
@@ -67,7 +71,7 @@ def buscaritens():
                     result.get("_id"),
                     result.get("nome", ""),
                     result.get("codigo", ""),
-                    result.get("estoqueMin", ""),
+                    result.get("descricao", ""),
                     result.get("categoria", ""),
                     result.get("preco", ""),
                     result.get("quantidade", ""),
@@ -78,6 +82,7 @@ def buscaritens():
         return render_template("index.html", table_data=table_data, value_search=item)
     else:
         return redirect(url_for("home"))
+
 
 
 @app.route("/deletar/<id>", methods=["POST"])

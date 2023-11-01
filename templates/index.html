@@ -59,8 +59,8 @@
                         </div>
                         <div class="mb-4 col-12 col-sm-4">
                             <select class="form-select" name="status">
-                                <option value="Ativo">Ativo</option>
-                                <option value="Inativo">Inativo</option>
+                                <option value="Ativo" checked>Ativo</option>
+                                <option value="Inativo" disabled>Inativo</option>
                             </select>
                         </div>
 
@@ -74,8 +74,28 @@
 
 
     <!-- Barra de pesquisa -->
+
     <div class="container p-2">
         <div class="w-100 d-flex justify-content-end text-end">
+            <form method="POST" action="/buscar" class="d-flex mb-3 gap-2 w-25">
+                <select class="form-select" name="search-option">
+                    <option value="codigo">Código</option>
+                    <option value="nome">Nome</option>
+                    <option value="categoria">Categoria</option>
+                    <option value="categoria">Status</option>
+                </select>
+                <input class="form-control" type="text" placeholder="Buscar Item" name="buscar-item"
+                    value="{% if value_search %}{{ value_search }}{% endif %}">
+                <button type="submit" name="buscar" class="btn btn-outline-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+        <!-- <div class="w-100 d-flex justify-content-end text-end">
             <form method="POST" action="/buscar" class="d-flex mb-3 gap-2 w-25">
                 <input class="form-control" type="text" placeholder="buscar Item" id="buscar-item" name="buscar-item"
                     value="{% if value_search %}{{ value_search }}{% endif %}">
@@ -86,7 +106,7 @@
                             d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg></button>
             </form>
-        </div>
+        </div> -->
         <!-- Tabela para exibir os dados -->
         <div class="divTable">
             <table class="table">
