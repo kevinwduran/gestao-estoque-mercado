@@ -1,8 +1,10 @@
 import re
 from bson import ObjectId
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, flash
+
 
 app = Flask(__name__)
+app.secret_key = 'sua_chave_secreta_aqui'
 import pymongo
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -12,6 +14,8 @@ mydb = myclient["dbMeccanotecnica"]
 mycol = mydb["Products"]
 validateAccess = True
 
+
+
 @app.route("/")
 def home():
     if(validateAccess):
@@ -20,8 +24,10 @@ def home():
     else:
         return render_template("login.html")
 
+
 @app.route("/", methods=["POST"])
 def cadastrar():
+
     nome = request.form["nome"]
     codigo = request.form["codigo"]
     estoqueMin = request.form["estoqueMin"]
@@ -31,6 +37,11 @@ def cadastrar():
     unidadeMedida = request.form["unidadeMedida"]
     status = request.form["status"]
     
+    # Verifica se o código já existe no banco de dados
+    existing_item = mycol.find_one({"codigo": codigo})
+    if existing_item:
+        flash("Código já existe. Escolha um código diferente.", "error")
+        return redirect(url_for("home"))
 
     avulso = {
         "nome": nome,
@@ -71,7 +82,7 @@ def buscaritens():
                     result.get("_id"),
                     result.get("nome", ""),
                     result.get("codigo", ""),
-                    result.get("descricao", ""),
+                    result.get("estoqueMin", ""),
                     result.get("categoria", ""),
                     result.get("preco", ""),
                     result.get("quantidade", ""),
@@ -142,12 +153,12 @@ def salvarAlteracoes():
     quantidade = request.form["quantidade"]
     unidadeMedida = request.form["unidadeMedida"]
     status = request.form["status"]
+    
     object_id = ObjectId(id)
     paraModificar = {"_id": object_id}
     novoValor = {
         "$set": {
             "nome": nome,
-            "codigo": codigo,
             "estoqueMin": estoqueMin,
             "categoria": categoria,
             "preco": preco,
@@ -156,8 +167,19 @@ def salvarAlteracoes():
             "status": status,
         }
     }
+
+    # Verifica se o código foi alterado
+    item_data = mycol.find_one({"_id": object_id})
+    if item_data:
+        if item_data.get("codigo") != codigo:
+            existing_item = mycol.find_one({"codigo": codigo})
+            if existing_item:
+                flash("Código já existe. Escolha um código diferente.", "error")
+                return redirect(url_for("alterar", id=id))  # Redireciona de volta à página de alteração
+
     mycol.update_one(paraModificar, novoValor)
     return redirect(url_for("home"))
+
 
 
 def buscarDados():
@@ -180,6 +202,7 @@ def buscarDados():
             ]
         )
     return table_data
+
 
 
 if __name__ == "__main__":

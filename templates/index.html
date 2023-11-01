@@ -14,23 +14,23 @@
                     <!-- Formulário para inserir novos produtos -->
                     <form class="mb-3 row" action="/" method="POST">
                         <div class="col-12 col-sm-4 mb-4">
-                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+                            <input type="text" class="form-control" required id="nome" name="nome" placeholder="Nome">
                         </div>
 
                         <div class="mb-4 col-12 col-sm-4">
-                            <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Código">
+                            <input type="number" class="form-control" required id="codigo" name="codigo" placeholder="Código">
                         </div>
 
                         <div class="mb-4 col-12 col-sm-4">
                             <div class="input-group">
                                 <span class="input-group-text">0</span>
-                                <input type="text" class="form-control" id="estoqueMin" name="estoqueMin"
+                                <input type="number" class="form-control" required id="estoqueMin" name="estoqueMin"
                                     placeholder="Estoque Mínimo">
                             </div>
                         </div>
 
                         <div class="mb-4 col-12 col-sm-4">
-                            <select class="form-select" name="categoria">
+                            <select class="form-select" required name="categoria">
                                 <option value="Hortifruti">Hortifruti</option>
                                 <option value="Bebida">Bebida</option>
                                 <option value="Carnes e Frios">Carnes e Frios</option>
@@ -40,25 +40,25 @@
                         <div class="mb-4 col-12 col-sm-4">
                             <div class="input-group">
                                 <span class="input-group-text">R$</span>
-                                <input type="text" class="form-control" id="preco" name="preco" placeholder="Preço">
+                                <input type="text" class="form-control" required id="preco" name="preco" placeholder="Preço">
                             </div>
                         </div>
 
                         <div class="mb-4 col-12 col-sm-4">
                             <div class="input-group">
                                 <span class="input-group-text">0</span>
-                                <input type="text" class="form-control" id="quantidade" name="quantidade"
+                                <input type="number" class="form-control" required id="quantidade" name="quantidade"
                                     placeholder="Quantidade">
                             </div>
                         </div>
                         <div class="mb-4 col-12 col-sm-4">
-                            <select class="form-select" name="unidadeMedida">
+                            <select class="form-select" required name="unidadeMedida">
                                 <option value="Kg">Kg</option>
                                 <option value="L">L</option>
                             </select>
                         </div>
                         <div class="mb-4 col-12 col-sm-4">
-                            <select class="form-select" name="status">
+                            <select class="form-select" required name="status">
                                 <option value="Ativo" checked>Ativo</option>
                                 <option value="Inativo" disabled>Inativo</option>
                             </select>
@@ -71,6 +71,25 @@
                 </div>
             </div>
     </section>
+
+    <div class="modal fade" id="modalErro" tabindex="-1" role="dialog" aria-labelledby="modalErroLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalErroLabel">Erro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="mensagemErro"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Barra de pesquisa -->
@@ -95,18 +114,7 @@
                 </button>
             </form>
         </div>
-        <!-- <div class="w-100 d-flex justify-content-end text-end">
-            <form method="POST" action="/buscar" class="d-flex mb-3 gap-2 w-25">
-                <input class="form-control" type="text" placeholder="buscar Item" id="buscar-item" name="buscar-item"
-                    value="{% if value_search %}{{ value_search }}{% endif %}">
-                <button type="submit" name="buscar" class="btn btn-outline-secondary"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-search" viewBox="0 0 16 16">
-                        <path
-                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                    </svg></button>
-            </form>
-        </div> -->
+
         <!-- Tabela para exibir os dados -->
         <div class="divTable">
             <table class="table">
@@ -164,10 +172,15 @@
         </div>
     </div>
     </div>
+
+    
+
     <!-- Importa os scripts do Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+    </script>
+
 </body>
 
 {% endblock %}
