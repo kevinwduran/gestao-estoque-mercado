@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    transition: none;
+    transform: none;
+}
+
+/* btn salvar */
+.salvar{
+    background-color: var(--color-6);
+    color: var(--color-1);
+    font-weight: bold;
+}
+.salvar:hover {
+    background-color: var(--color-1);
+    color: var(--color-6);
+}
+
+/* form (inserir/alterar produtos */
+.form-geral h3{
+    color: var(--color-1);
+}
+
+/* btn salvar e voltar (alterItens) */
+.btns-alt{
+    width: 49%;
+}
+
+tr {
+    text-align: center;
+    font-size: 12px;
+}
+
+.icon {
+    margin: 0 auto;
+}
+
+.bg-xanthous {
+    color: var(--color-6);
+}
+
+.bg-dark-purple {
+    background-color: var(--color-1);
+}
+
+.bg-emerald {
+    background-color: var(--color-2);
+}
+
+.bg-red-crayola {
+    background-color: var(--color-3);
+}
+
+.bg-blue-ncs {
+    background-color: var(--color-4);
+}
+
+.save {
+    font-weight: 700;
+    background-color: var(--color-2);
+    color: var(--color-7);
+}
+
+
+
+.btn-sidebar {
+    background-color: none;
+    background-color: var(--color-5);
+}
+
+.btn-sidebar:hover {
+    background-color: var(--color-6);
+    color: var(--color-7);
+}
+
+.divTable {
+    overflow-x: scroll;
+}
+
+/* sidebar */
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand span {
+    color: var(--color-7);
+    font-weight: bold;
+}

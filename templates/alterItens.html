@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<body>
+    <!-- Corpo da página -->
+    <section class="form-geral">
+        <div class="mt-4 container bg-white p-5 shadow">
+            <h3 class="mb-4">Alterar Produto</h3>
+            <div class="form">
+                <!-- Formulário para alterar o produto -->
+                <form class="mb-3 row" method="POST" action="/salvarAlteracoes">
+                    <!-- Campo oculto para armazenar o ID do produto -->
+                    <input class="d-none" name="id" value="{{ id }}" id="id">
+                    <div class="mb-4 col-12 col-sm-4">
+                        <input type="text" class="form-control" name="nome" id="nome" value="{{ nome }}" name="nome"
+                            placeholder="Nome">
+                    </div>
+
+                    <div class="mb-4 col-12 col-sm-4">
+                        <input type="text" class="form-control" name="codigo" id="codigo" value="{{ codigo }}"
+                            name="codigo" placeholder="Código">
+                    </div>
+
+                    <div class="mb-4 col-12 col-sm-4">
+                        <input type="text" class="form-control" name="estoqueMin" id="estoqueMin"
+                            value="{{ estoqueMin }}" name="estoqueMin" placeholder="Estoque Mínimo">
+                    </div>
+
+                    <div class="mb-4 col-12 col-sm-4">
+                        <select class="form-select" name="categoria" id="categoria">
+                            <option value="" selected></option>
+                            {% for option in ["Hortifruti", "Bebida", "Carnes e Frios"] %}
+                            <option value="{{ option }}" {% if option==categoria %}selected{% endif %}>{{ option }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-4 col-12 col-sm-4">
+                        <input type="text" class="form-control" name="preco" id="preco" name="preco" value="{{ preco }}"
+                            placeholder="Preço">
+                    </div>
+
+                    <div class="mb-4 col-12 col-sm-4">
+                        <input type="text" class="form-control" name="quantidade" id="quantidade"
+                            value="{{ quantidade }}" name="quantidade" placeholder="Quantidade">
+                    </div>
+
+                    <div class="col-12 col-sm-4">
+                        <select class="form-select" name="unidadeMedida" id="unidadeMedida">
+                            <option value="" selected></option>
+                            {% for option in ["Kg", "L"] %}
+                            <option value="{{ option }}" {% if option==unidadeMedida %}selected{% endif %}>{{ option }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-sm-4">
+                        <select class="form-select" name="status" id="status">
+                            <option value="" selected></option>
+                            {% for option in ["Ativo", "Inativo"] %}
+                            <option value="{{ option }}" {% if option==status %}selected{% endif %}>{{ option }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+
+
+                    <div class="col-12 col-sm-4">
+                        <!-- Botão para submeter o formulário e salvar as alterações -->
+                        <form class="btn-alt" action="/">
+                            <button type="submit" name="enviar" value="Enviar"
+                                class="btn btn-outline-secondary btns-alt">Voltar</button>
+                        </form>
+                        <button type="submit" name="enviar" value="Enviar" class="salvar btn btns-alt">Alterar</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Importa os scripts do Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+{% endblock %}
