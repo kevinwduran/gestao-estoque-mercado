@@ -9,23 +9,33 @@
             <h3 class="mb-3">Alterar Usuário</h3>
             <div class="form">
                 <!-- Formulário para alterar o produto -->
-                <form class="mb-3 row" method="POST" action="/userSalvarAlteracoes">
+                <form class="row" method="POST" action="/userSalvarAlteracoes">
                     <!-- Campo oculto para armazenar o ID do produto -->
                     <input class="d-none" name="id" value="{{ id }}" id="id">
 
-                    <div class="mb-3 col-12 col-sm-4">
+                    <div class="col-12 col-sm-3">
                         <label class="input-form" for="username">Usuário</label>
                         <input type="text" class="form-control" name="username" id="username" value="{{ username }}" name="username"
                             placeholder="Usuário">
                     </div>
 
-                    <div class="mb-3 col-12 col-sm-4">
+                    <div class="col-12 col-sm-3">
                         <label class="input-form" for="password">Senha</label>
-                        <input type="text" class="form-control" name="password" id="password" value="{{ password }}"
-                            name="password" placeholder="Senha">
+                        <input type="text" class="form-control" name="password" id="password" value="{{ password }}"name="password" placeholder="Senha">
                     </div>
 
-                    <div class="col-12 col-sm-4 d-flex justify-content-end">
+                    <div class="col-12 col-sm-3">
+                        <label class="input-form" for="nivel">Nível</label>
+                        <select class="form-select" name="nivel" id="nivel">
+                            <option value="" selected></option>
+                            {% for option in ["1", "2"] %}
+                            <option value="{{ option }}" {% if option==nivel %}selected{% endif %}>{{ option }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-sm-3 d-flex justify-content-end">
                         <!-- Botão para submeter o formulário e salvar as alterações -->
                         <form class="btn-alt" action="/userCadastrar">
                             <button type="submit" name="enviar" value="Enviar" class="btn btn-outline-secondary btns-alt align-self-end me-2">Voltar</button>

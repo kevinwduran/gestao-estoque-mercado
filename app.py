@@ -21,9 +21,16 @@ login_manager.login_view = 'login'
 class User(UserMixin):
     def __init__(self, username):
         self.username = username
+        self.nivel = self.get_user_nivel(username)
 
     def get_id(self):
         return self.username
+    
+    def get_user_nivel(self, username):
+        user_data = mycol2.find_one({"username": username})
+        if user_data:
+            return user_data.get("nivel")
+        return None
 
 @login_manager.user_loader
 def load_user(username):
@@ -286,6 +293,7 @@ def userCadastrar():
 
     username = request.form["username"]
     password = request.form["password"]
+    nivel = request.form["nivel"]
     
     # Verifica se o código já existe no banco de dados
     existing_item = mycol2.find_one({"username": username})
@@ -296,6 +304,7 @@ def userCadastrar():
     avulso = {
         "username": username,
         "password": password,
+        "nivel": nivel,
     }
     x = mycol2.insert_one(avulso)
     return redirect(url_for("users"))
@@ -324,12 +333,14 @@ def userAlterar(id):
         if item_data:
             username = item_data.get("username", "")
             password = item_data.get("password", "")
+            nivel = item_data.get("nivel", "")
 
             return render_template(
                 "alterUsers.html",
                 id=id,
                 username=username,
                 password=password,
+                nivel=nivel,
             )
         else:
             return "Usuário não encontrado"
@@ -342,6 +353,7 @@ def userSalvarAlteracoes():
     id = request.form["id"]
     username = request.form["username"]
     password = request.form["password"]
+    nivel = request.form["nivel"]
     
     object_id = ObjectId(id)
     paraModificar = {"_id": object_id}
@@ -349,6 +361,7 @@ def userSalvarAlteracoes():
         "$set": {
             "username": username,
             "password": password,
+            "nivel": nivel,
         }
     }
 
@@ -377,9 +390,17 @@ def userBuscarDados():
                 data.get("_id"),
                 data.get("username", ""),
                 data.get("password", ""),
+                data.get("nivel", ""),
             ]
         )
     return table_data
+
+@app.context_processor
+def utility_processor():
+    user_level = None
+    if current_user.is_authenticated:
+        user_level = current_user.nivel
+    return dict(user_level=user_level)
 
 if __name__ == "__main__":
     
