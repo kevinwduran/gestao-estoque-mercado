@@ -1,29 +1,31 @@
 /* btn salvar */
-.salvar{
+.salvar {
     background-color: var(--color-6);
     color: var(--color-1);
     font-weight: bold;
 }
+
 .salvar:hover {
     background-color: var(--color-1);
     color: var(--color-6);
 }
 
 /* form (inserir/alterar produtos */
-.form-geral h3{
+.form-geral h3 {
     color: var(--color-1);
 }
 
 .rounded-container {
     border-radius: 10px;
 }
-.input-form{
+
+.input-form {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.input-form::before{
+.input-form::before {
     display: block;
     content: "";
     width: 12px;
@@ -32,29 +34,34 @@
 }
 
 /* btn_buscar (lupa) */
-.btn-outline-secondary{
+.btn-outline-secondary {
     border: 1px solid var(--color-1);
 }
-.btn-outline-secondary svg{
+
+.btn-outline-secondary svg {
     fill: var(--color-1);
 }
-.btn-outline-secondary:hover{
+
+.btn-outline-secondary:hover {
     border: 1px solid var(--color-1);
     background-color: var(--color-1);
 }
-.btn-outline-secondary:hover svg{
+
+.btn-outline-secondary:hover svg {
     fill: var(--color-7);
 }
 
 /* icons */
 .alert-icon,
 .icon,
-.edit-icon{
+.edit-icon {
     fill: var(--color-1);
 }
-.alert-icon:hover{
+
+.alert-icon:hover {
     fill: var(--color-3);
 }
-.edit-icon:hover{
+
+.edit-icon:hover {
     fill: var(--color-6);
 }

@@ -8,12 +8,13 @@
     transition: none;
     transform: none;
 }
-body{
+
+body {
     background-color: aqua;
 }
 
 /* btn salvar e voltar (alterItens) */
-.btns-alt{
+.btns-alt {
     width: 49%;
     gap: 20px;
     color: var(--color-1);
@@ -40,23 +41,27 @@ tr {
     background-color: var(--color-2);
 }
 
-.bg-red-crayola {
-    background-color: #ede6dd;
+.bg-main {
+    background-color: var(--color-8);
 }
 
 .bg-blue-ncs {
     background-color: var(--color-6);
 }
-
+/* TABELAS */
 .divTable {
     overflow-x: scroll;
 }
 
-.table-cell{
+.table-cell {
     width: 10%;
 }
 
-.table-cell-last{
+.table-cell-last {
     width: 5%;
 }
-
+/* login */
+.login-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

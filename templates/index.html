@@ -2,80 +2,77 @@
 
 {% block content %}
 
-<body class="bg-red-crayola">
-    <!--Sidebar-->
-    <div class="form-geral">
-        <div class="mt-4 bg-white shadow p-4 container rounded-container">
-            <div class="d-flex align-items-center">
-                <svg class="mb-2 me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ED254E"
-                    class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                </svg>
-                <h3>Lista de Produtos Abaixo do Estoque Mínimo</h3>
-            </div>
-            <div class="divTable">
-                <table class="table table-striped">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Código</th>
-                            <th scope="col">Estoque Mínimo</th>
-                            <th scope="col">Categoria</th>
-                            <th scope="col">Preço</th>
-                            <th scope="col">Quantidade</th>
-                            <th scope="col">UM</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Editar</th>
-                            <th scope="col">Visualizar</th>
+<!--Sidebar-->
+<div class="form-geral">
+    <div class="mt-4 bg-white shadow p-4 container rounded-container">
+        <div class="d-flex align-items-center">
+            <svg class="mb-2 me-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ED254E"
+                class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+            </svg>
+            <h3>Lista de Produtos Abaixo do Estoque Mínimo</h3>
+        </div>
+        <div class="divTable">
+            <table class="table table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Código</th>
+                        <th scope="col">Estoque Mínimo</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">UM</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Visualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in table_data %}
+                    {% if row[6] < row[3] %} <tr>
+                        <!-- Exibe os dados na tabela -->
+                        <td class="table-cell">{{ row[1] }}</td>
+                        <td class="table-cell">{{ row[2] }}</td>
+                        <td class="table-cell">{{ row[3] }}</td>
+                        <td class="table-cell">{{ row[4] }}</td>
+                        <td class="table-cell">{{ row[5] }}</td>
+                        <td class="table-cell">{{ row[6] }}</td>
+                        <td class="table-cell">{{ row[7] }}</td>
+                        <td class="table-cell">{{ row[8] }}</td>
+                        <td class="table-cell-last">
+                            <form method="GET" class="icon" action="/alterar/{{ row[0] }}">
+                                <button class="btn p-0" type="submit" name="{{ row[0] }}">
+                                    <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path
+                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502 .646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                        <path fill-rule="evenodd"
+                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                        <td class="table-cell-last">
+                            <a href="{{ url_for('products') }}">
+                                <button class="btn p-0" type="submit" name="{{ row[0] }}">
+                                    <svg class="alert-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                        <path
+                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                    </svg>
+                                </button>
+                            </a>
+                        </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in table_data %}
-                        {% if row[6] < row[3] %} <tr>
-                            <!-- Exibe os dados na tabela -->
-                            <td class="table-cell">{{ row[1] }}</td>
-                            <td class="table-cell">{{ row[2] }}</td>
-                            <td class="table-cell">{{ row[3] }}</td>
-                            <td class="table-cell">{{ row[4] }}</td>
-                            <td class="table-cell">{{ row[5] }}</td>
-                            <td class="table-cell">{{ row[6] }}</td>
-                            <td class="table-cell">{{ row[7] }}</td>
-                            <td class="table-cell">{{ row[8] }}</td>
-                            <td class="table-cell-last">
-                                <form method="GET" class="icon" action="/alterar/{{ row[0] }}">
-                                    <button class="btn p-0" type="submit" name="{{ row[0] }}">
-                                        <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                            <path
-                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502 .646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                            <path fill-rule="evenodd"
-                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                        </svg>
-                                    </button>
-                                </form>
-                            </td>
-                            <td class="table-cell-last">
-                                <a href="{{ url_for('products') }}">
-                                    <button class="btn p-0" type="submit" name="{{ row[0] }}">
-                                        <svg class="alert-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                            <path
-                                                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                        </svg>
-                                    </button>
-                                </a>
-                            </td>
-                            </tr>
-                            {% endif %}
-                            {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                        {% endif %}
+                        {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-
-</body>
+</div>
 
 {% endblock %}
