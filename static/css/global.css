@@ -1,31 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 * {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
     transition: none;
     transform: none;
 }
-
-/* btn salvar */
-.salvar{
-    background-color: var(--color-6);
-    color: var(--color-1);
-    font-weight: bold;
-}
-.salvar:hover {
-    background-color: var(--color-1);
-    color: var(--color-6);
-}
-
-/* form (inserir/alterar produtos */
-.form-geral h3{
-    color: var(--color-1);
+body{
+    background-color: aqua;
 }
 
 /* btn salvar e voltar (alterItens) */
 .btns-alt{
     width: 49%;
+    gap: 20px;
+    color: var(--color-1);
 }
 
 tr {
@@ -50,57 +41,22 @@ tr {
 }
 
 .bg-red-crayola {
-    background-color: var(--color-3);
+    background-color: #ede6dd;
 }
 
 .bg-blue-ncs {
-    background-color: var(--color-4);
-}
-
-.save {
-    font-weight: 700;
-    background-color: var(--color-2);
-    color: var(--color-7);
-}
-
-
-
-.btn-sidebar {
-    background-color: none;
-    background-color: var(--color-5);
-}
-
-.btn-sidebar:hover {
     background-color: var(--color-6);
-    color: var(--color-7);
 }
 
 .divTable {
     overflow-x: scroll;
 }
 
-/* sidebar */
-
-.navbar-brand {
-    display: flex;
-    align-items: center;
+.table-cell{
+    width: 10%;
 }
 
-.navbar-brand span {
-    color: var(--color-7);
-    font-weight: bold;
+.table-cell-last{
+    width: 5%;
 }
 
-
-
-.error-message {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #ff0000; /* Cor de fundo vermelha */
-    color: #ffffff; /* Cor do texto branca */
-    text-align: center;
-    padding: 10px;
-}

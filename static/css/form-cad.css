@@ -1,0 +1,47 @@
+/* btn salvar */
+.salvar{
+    background-color: var(--color-6);
+    color: var(--color-1);
+    font-weight: bold;
+}
+.salvar:hover {
+    background-color: var(--color-1);
+    color: var(--color-6);
+}
+
+/* form (inserir/alterar produtos */
+.form-geral h3{
+    color: var(--color-1);
+}
+
+.rounded-container {
+    border-radius: 10px;
+}
+.input-form{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-form::before{
+    display: block;
+    content: "";
+    width: 12px;
+    height: 4px;
+    background-color: var(--color-6);
+}
+
+/* btn_buscar (lupa) */
+.btn-outline-secondary{
+    border: 1px solid var(--color-1);
+}
+.btn-outline-secondary svg{
+    fill: var(--color-1);
+}
+.btn-outline-secondary:hover{
+    border: 1px solid var(--color-1);
+    background-color: var(--color-1);
+}
+.btn-outline-secondary:hover svg{
+    fill: var(--color-7);
+}

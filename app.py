@@ -1,30 +1,81 @@
 import re
+import pymongo
 from bson import ObjectId
-from flask import Flask, redirect, render_template, request, url_for, flash
-
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'
-import pymongo
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-# Acessa o banco de dados
 mydb = myclient["dbMeccanotecnica"]
-# Acessa a coleção
 mycol = mydb["Products"]
-validateAccess = True
+mycol2 = mydb["Users"]
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
+class User(UserMixin):
+    def __init__(self, username):
+        self.username = username
 
-@app.route("/")
+    def get_id(self):
+        return self.username
+
+@login_manager.user_loader
+def load_user(username):
+    user_data = mycol2.find_one({"username": username})
+    if user_data:
+        user = User(username)
+        return user
+
+@app.route('/')
+@login_required  # Proteja a rota da home para garantir que apenas usuários autenticados possam acessá-la.
 def home():
-    if(validateAccess):
-        table_data = buscarDados()
-        return render_template("index.html", table_data=table_data)
-    else:
-        return render_template("login.html")
+    table_data = buscarDados()
+    return render_template("index.html", table_data=table_data)
 
 
+@app.route('/users')
+@login_required
+def users():
+    table_data = userBuscarDados()
+    return render_template("users.html", table_data=table_data)
+
+@app.route('/products')
+@login_required
+def products():
+    table_data = buscarDados()
+    return render_template("products.html", table_data=table_data)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user_data = mycol2.find_one({"username": username, "password": password})
+
+        if user_data:
+            user = User(username)
+            login_user(user)
+            print("Login bem-sucedido", "success")
+            return redirect(url_for('home')) 
+        else:
+            print("Credenciais inválidas. Tente novamente.", "error")
+
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    session.clear()  # Limpa a sessão do usuário
+    return redirect(url_for('login'))
+
+# CRUD PRODUTOS
 @app.route("/", methods=["POST"])
 def cadastrar():
 
@@ -54,7 +105,7 @@ def cadastrar():
         "status": status,
     }
     x = mycol.insert_one(avulso)
-    return redirect(url_for("home"))
+    return redirect(url_for("products"))
 
 
 @app.route("/buscar", methods=["POST"])
@@ -90,9 +141,9 @@ def buscaritens():
                     result.get("status", ""),
                 ]
             )
-        return render_template("index.html", table_data=table_data, value_search=item)
+        return render_template("products.html", table_data=table_data, value_search=item)
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("products"))
 
 
 
@@ -102,7 +153,7 @@ def deletar(id):
     myquery = {"_id": object_id}
     result = mycol.delete_one(myquery)
     if result.deleted_count > 0:
-        return redirect(url_for("home"))
+        return redirect(url_for("products"))
     else:
         return "não tem registro"
 
@@ -139,7 +190,7 @@ def alterar(id):
         else:
             return "Item não encontrado"
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("products"))
 
 
 @app.route("/salvarAlteracoes", methods=["POST"])
@@ -178,7 +229,7 @@ def salvarAlteracoes():
                 return redirect(url_for("alterar", id=id))  # Redireciona de volta à página de alteração
 
     mycol.update_one(paraModificar, novoValor)
-    return redirect(url_for("home"))
+    return redirect(url_for("products"))
 
 
 
@@ -203,7 +254,108 @@ def buscarDados():
         )
     return table_data
 
+# Usuários (CRUD)
 
+@app.route("/userCadastrar", methods=["POST"])
+def userCadastrar():
+
+    username = request.form["username"]
+    password = request.form["password"]
+    
+    # Verifica se o código já existe no banco de dados
+    existing_item = mycol2.find_one({"username": username})
+    if existing_item:
+        flash("Usuário já existe. Escolha um Usuário diferente.", "error")
+        return redirect(url_for("users"))
+
+    avulso = {
+        "username": username,
+        "password": password,
+    }
+    x = mycol2.insert_one(avulso)
+    return redirect(url_for("users"))
+
+
+
+
+@app.route("/userDeletar/<id>", methods=["POST"])
+def userDeletar(id):
+    object_id = ObjectId(id)
+    myquery = {"_id": object_id}
+    result = mycol2.delete_one(myquery)
+    if result.deleted_count > 0:
+        return redirect(url_for("users"))
+    else:
+        return "não tem registro"
+
+
+@app.route("/userAlterar/<id>", methods=["GET"])
+def userAlterar(id):
+    if id:
+        object_id = ObjectId(id)
+        myquery = {"_id": object_id}
+        item_data = mycol2.find_one(myquery)
+
+        if item_data:
+            username = item_data.get("username", "")
+            password = item_data.get("password", "")
+
+            return render_template(
+                "alterUsers.html",
+                id=id,
+                username=username,
+                password=password,
+            )
+        else:
+            return "Usuário não encontrado"
+    else:
+        return redirect(url_for("users"))
+
+
+@app.route("/userSalvarAlteracoes", methods=["POST"])
+def userSalvarAlteracoes():
+    id = request.form["id"]
+    username = request.form["username"]
+    password = request.form["password"]
+    
+    object_id = ObjectId(id)
+    paraModificar = {"_id": object_id}
+    novoValor = {
+        "$set": {
+            "username": username,
+            "password": password,
+        }
+    }
+
+    # Verifica se o código foi alterado
+    item_data = mycol2.find_one({"_id": object_id})
+    if item_data:
+        if item_data.get("username") != username:
+            existing_item = mycol2.find_one({"username": username})
+            if existing_item:
+                flash("Código já existe. Escolha um username diferente.", "error")
+                return redirect(url_for("userAlterar", id=id))  # Redireciona de volta à página de alteração
+
+    mycol2.update_one(paraModificar, novoValor)
+    return redirect(url_for("users"))
+
+
+
+def userBuscarDados():
+    all_data = mycol2.find()
+
+    table_data = []
+
+    for data in all_data:
+        table_data.append(
+            [
+                data.get("_id"),
+                data.get("username", ""),
+                data.get("password", ""),
+            ]
+        )
+    return table_data
 
 if __name__ == "__main__":
+    
     app.run(debug=True)

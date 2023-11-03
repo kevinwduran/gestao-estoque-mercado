@@ -1,0 +1,46 @@
+/* sidebar */
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand span {
+    color: var(--color-7);
+    font-weight: bold;
+}
+
+/* btn Sair */
+.btn-sair{
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    border: none;
+    padding: 6px 12px;
+    background-color: var(--color-6);
+    align-items: center;
+    border-radius: 5px;
+}
+.btn-sair:hover a{
+    text-decoration: underline;
+}
+
+.btn-sair a{
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--color-1);
+}
+
+.btn-sair svg{
+    margin-bottom: 3px;
+}
+
+/* btn sidebar */
+.btn-sidebar {
+    background-color: none;
+    background-color: var(--color-5);
+}
+
+.btn-sidebar:hover {
+    background-color: var(--color-6);
+}
