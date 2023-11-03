@@ -45,3 +45,16 @@
 .btn-outline-secondary:hover svg{
     fill: var(--color-7);
 }
+
+/* icons */
+.alert-icon,
+.icon,
+.edit-icon{
+    fill: var(--color-1);
+}
+.alert-icon:hover{
+    fill: var(--color-3);
+}
+.edit-icon:hover{
+    fill: var(--color-6);
+}

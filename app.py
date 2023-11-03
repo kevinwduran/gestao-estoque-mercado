@@ -33,9 +33,9 @@ def load_user(username):
         return user
 
 @app.route('/')
-@login_required  # Proteja a rota da home para garantir que apenas usuários autenticados possam acessá-la.
+@login_required
 def home():
-    table_data = buscarDados()
+    table_data = buscarProdutosAbaixoEstoqueMinimo()
     return render_template("index.html", table_data=table_data)
 
 
@@ -230,6 +230,31 @@ def salvarAlteracoes():
 
     mycol.update_one(paraModificar, novoValor)
     return redirect(url_for("products"))
+
+def buscarProdutosAbaixoEstoqueMinimo():
+    produtos_abaixo_estoque_minimo = mycol.find()
+    table_data = []
+
+    for produto in produtos_abaixo_estoque_minimo:
+        quantidade = int(produto.get("quantidade", "0"))
+        estoque_min = int(produto.get("estoqueMin", "0"))
+
+        if quantidade < estoque_min:
+            table_data.append(
+                [
+                    produto.get("_id"),
+                    produto.get("nome", ""),
+                    produto.get("codigo", ""),
+                    estoque_min,
+                    produto.get("categoria", ""),
+                    produto.get("preco", ""),
+                    quantidade,
+                    produto.get("unidadeMedida", ""),
+                    produto.get("status", ""),
+                ]
+            )
+
+    return table_data
 
 
 

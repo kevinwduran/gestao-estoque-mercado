@@ -14,7 +14,7 @@
 
 </head>
 
-<body>
+<body class="bg-red-crayola">
     <header>
         <nav class="navbar navbar-expand-lg bg-dark-purple">
             <div class="container">
@@ -29,18 +29,19 @@
             </div>
         </nav>
     </header>
-    <div class="container p-4 shadow bg-white mt-4 rounded-container">
+    <div class="container p-4 w-25 shadow bg-white mt-4 rounded-container">
+        <h3 class="mb-3">Faça seu login</h3>
         <form method="POST" action="{{ url_for('login') }}">
             <!-- Seus campos de login e senha aqui -->
             <div class="mb-3">
-                <label for="username" class="form-label">Login</label>
+                <label for="username" class="form-label">Usuário</label>
                 <input type="text" class="form-control" id="username" name="username">
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">Senha</label>
                 <input type="password" class="form-control" id="password" name="password">
             </div>
-            <button type="submit" class="btn salvar">Entrar</button>
+            <button type="submit" class="btn w-100 salvar">Entrar</button>
         </form>        
     </div>
 </body>
