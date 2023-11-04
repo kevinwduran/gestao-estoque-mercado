@@ -217,6 +217,7 @@ def salvarAlteracoes():
     novoValor = {
         "$set": {
             "nome": nome,
+            "codigo": codigo,
             "estoqueMin": estoqueMin,
             "categoria": categoria,
             "preco": preco,
@@ -403,5 +404,4 @@ def utility_processor():
     return dict(user_level=user_level)
 
 if __name__ == "__main__":
-    
     app.run(debug=True)

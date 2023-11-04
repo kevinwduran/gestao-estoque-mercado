@@ -34,7 +34,7 @@
                         <label class="input-form" for="categoria">Categoria</label>
                         <select class="form-select" name="categoria" id="categoria">
                             <option value="" selected></option>
-                            {% for option in ["Hortifruti", "Bebida", "Carnes e Frios"] %}
+                            {% for option in ["Hortifruti", "Bebida", "Carnes e Frios", "Padaria", "Limpeza", "Higiene Pessoal", "Salgadinho", "Laticínios", "Doces"] %}
                             <option value="{{ option }}" {% if option==categoria %}selected{% endif %}>{{ option }}
                             </option>
                             {% endfor %}
@@ -57,7 +57,7 @@
                         <label class="input-form" for="unidadeMedida">Unidade de Medida</label>
                         <select class="form-select" name="unidadeMedida" id="unidadeMedida">
                             <option value="" selected></option>
-                            {% for option in ["Kg", "L"] %}
+                            {% for option in ["Kg", "L", "UN"] %}
                             <option value="{{ option }}" {% if option==unidadeMedida %}selected{% endif %}>{{ option }}
                             </option>
                             {% endfor %}
